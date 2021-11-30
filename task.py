@@ -10,6 +10,8 @@ from utils import WorkWithExcel
 
 class ParseAgencies:
 
+    NUM_OF_AGENCY = 24
+
     def __init__(self):
         self.browser_lib = Selenium()
         self.agency_info = {}
@@ -62,12 +64,14 @@ class ParseAgencies:
 
         for row in rows:
             value = row.find_elements_by_tag_name('td')
+
             try:
                 self.uii_url.append(value[0].find_element_by_tag_name('a').get_attribute('href'))
                 self.investment_title.append(value[2].text)
                 self.uii.append(value[0].text)
-            except:
+            except Exception:
                 pass
+
             values = [val.text for val in value]
             data.append(values)
 
@@ -103,20 +107,20 @@ class ParseAgencies:
 
 
 if __name__ == "__main__":
-    a = ParseAgencies()
+    parse = ParseAgencies()
 
     try:
-        a.open_the_website("https://itdashboard.gov/")
-        a.click_elem("node-23")
-        a.get_agencies('//div[@id="agency-tiles-widget"]//div[@class="col-sm-4 text-center noUnderline"]')
-        a.excel.create_exel_file('output/agencies.xlsx')
-        a.excel.rename_sheet('output/agencies.xlsx', 'Sheet', 'Agencies')
-        a.excel.append_row_to_sheet(a.agency_info, 'output/agencies.xlsx', 'Agencies')
-        a.get_agency_page(24)
-        a.get_individual_invest('output/agencies.xlsx', 'Individual Investments')
-        a.download_pdf()
-        a.get_pdf_data()
-        a.compare_pdf()
+        parse.open_the_website("https://itdashboard.gov/")
+        parse.click_elem("node-23")
+        parse.get_agencies('//div[@id="agency-tiles-widget"]//div[@class="col-sm-4 text-center noUnderline"]')
+        parse.excel.create_exel_file('output/agencies.xlsx')
+        parse.excel.rename_sheet('output/agencies.xlsx', 'Sheet', 'Agencies')
+        parse.excel.append_row_to_sheet(parse.agency_info, 'output/agencies.xlsx', 'Agencies')
+        parse.get_agency_page(parse.NUM_OF_AGENCY)
+        parse.get_individual_invest('output/agencies.xlsx', 'Individual Investments')
+        parse.download_pdf()
+        parse.get_pdf_data()
+        parse.compare_pdf()
 
     finally:
-        a.browser_lib.close_all_browsers()
+        parse.browser_lib.close_all_browsers()
