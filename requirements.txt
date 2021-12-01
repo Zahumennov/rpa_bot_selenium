@@ -42,7 +42,6 @@ openpyxl==3.0.9
 orderedmultidict==1.0.1
 pdfminer.six==20201018
 Pillow==8.4.0
-pkg_resources==0.0.0
 platformdirs==2.4.0
 ply==3.11
 proxy-tools==0.1.0
