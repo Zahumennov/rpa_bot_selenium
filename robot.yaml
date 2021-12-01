@@ -1,13 +1,16 @@
 tasks:
   Default:
-    shell: python task.py
+    command: python -m robot --report NONE --outputdir output --logtitle "Task log" task.py
 
 condaConfigFile: conda.yaml
+
 artifactsDir: output
+
 PATH:
   - .
+
 PYTHONPATH:
   - .
+
 ignoreFiles:
   - .gitignore
-  - requirements.txt
